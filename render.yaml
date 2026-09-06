@@ -32,17 +32,24 @@ services:
         fromDatabase:
           name: orioni-db
           property: connectionString
+      # Cloudinary მონაცემები სურათებისთვის
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
 
   # ---------- React frontend (Static Site) ----------
   - type: web
     name: orioni-frontend
     runtime: static
     buildCommand: npm install && npm run build
-    staticPublishPath: ./build
+    staticPublishPath: ./dist
     rootDir: frontend/frontend
     envVars:
-      - key: REACT_APP_API_URL
-        value: https://orioni-backend.onrender.com/api/
+      - key: VITE_API_URL
+        value: https://orioni-backend.onrender.com
     routes:
       - type: rewrite
         source: /*
