@@ -37,7 +37,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # WhiteNoise უშუალოდ SecurityMiddleware-ის ქვემოთ
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -127,7 +127,7 @@ TIME_ZONE = 'Asia/Tbilisi'
 USE_I18N = True
 USE_TZ = True
 
-# --- Static Files Configuration ---
+# --- Static & Media Files Configuration ---
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
@@ -140,7 +140,9 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-# STORAGES კონფიგურაცია WhiteNoise-ის მხარდაჭერით
+# აუცილებელია cloudinary_storage-ის ძველი ქცევის მხარდაჭერისთვის
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 if os.environ.get('CLOUDINARY_CLOUD_NAME'):
     STORAGES = {
         "default": {
