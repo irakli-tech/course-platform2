@@ -1,0 +1,459 @@
+[
+{
+  "model": "courses.profile",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "first_name": "",
+    "last_name": "",
+    "role": "student",
+    "phone": "",
+    "avatar": "",
+    "bio": ""
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "first_name": "ირაკლი",
+    "last_name": "ბოჭორიშვილი",
+    "role": "teacher",
+    "phone": "55555555",
+    "avatar": "",
+    "bio": "უმაღლესი"
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 27,
+  "fields": {
+    "user": 28,
+    "first_name": "",
+    "last_name": "",
+    "role": "student",
+    "phone": "",
+    "avatar": "",
+    "bio": ""
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 28,
+  "fields": {
+    "user": 29,
+    "first_name": "ლევანი",
+    "last_name": "ლევანიძე",
+    "role": "student",
+    "phone": "68855555",
+    "avatar": "",
+    "bio": ""
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 29,
+  "fields": {
+    "user": 30,
+    "first_name": "ნათია",
+    "last_name": "ნათიაშვილი",
+    "role": "student",
+    "phone": "5551233221",
+    "avatar": "",
+    "bio": ""
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 30,
+  "fields": {
+    "user": 31,
+    "first_name": "სოლომონ",
+    "last_name": "სოლომონიძე",
+    "role": "teacher",
+    "phone": "58888884",
+    "avatar": "",
+    "bio": "პროფესორი"
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 31,
+  "fields": {
+    "user": 32,
+    "first_name": "ანრი",
+    "last_name": "ანრიაშვილი",
+    "role": "teacher",
+    "phone": "578965533",
+    "avatar": "",
+    "bio": "პროფესორი"
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 32,
+  "fields": {
+    "user": 33,
+    "first_name": "ნატო",
+    "last_name": "ნატონია",
+    "role": "teacher",
+    "phone": "52313464646",
+    "avatar": "",
+    "bio": "პროფესორი"
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 33,
+  "fields": {
+    "user": 34,
+    "first_name": "კირილე",
+    "last_name": "კირილეძე",
+    "role": "teacher",
+    "phone": "58888882",
+    "avatar": "",
+    "bio": "პროფესორი"
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 34,
+  "fields": {
+    "user": 35,
+    "first_name": "არდალიონი",
+    "last_name": "არდალიონიძე",
+    "role": "teacher",
+    "phone": "589352554",
+    "avatar": "",
+    "bio": "დოქტორი"
+  }
+},
+{
+  "model": "courses.profile",
+  "pk": 35,
+  "fields": {
+    "user": 36,
+    "first_name": "კატო",
+    "last_name": "კატოკია",
+    "role": "teacher",
+    "phone": "568884466",
+    "avatar": "",
+    "bio": "დოქტორი"
+  }
+},
+{
+  "model": "courses.category",
+  "pk": 1,
+  "fields": {
+    "name": "კომპიუტერული მეცნიერება",
+    "description": "ზოგადი დისციპლინა"
+  }
+},
+{
+  "model": "courses.category",
+  "pk": 2,
+  "fields": {
+    "name": "კიბერუსაფრთხოება",
+    "description": "კიბერუსაფრთხოება"
+  }
+},
+{
+  "model": "courses.category",
+  "pk": 3,
+  "fields": {
+    "name": "ვებ-დეველოპმენტი",
+    "description": "Frontend & Backend ტექნოლოგიები"
+  }
+},
+{
+  "model": "courses.category",
+  "pk": 4,
+  "fields": {
+    "name": "მონაცემთა მეცნიერება",
+    "description": "Data Science და ანალიტიკა"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 1,
+  "fields": {
+    "title": "კომიუტერული ტექნოლოგია",
+    "description": "კომიუტერული ტექნოლოგია, არქიტექტურა",
+    "syllabus": "კომიუტერული ტექნოლოგია, არქიტექტურა",
+    "price": "2100.00",
+    "image": "",
+    "category": 1,
+    "instructor": 2,
+    "start_date": "2026-12-12T14:00:00Z",
+    "duration_weeks": 7,
+    "created_at": "2026-08-29T08:35:48.476Z",
+    "updated_at": "2026-09-01T11:32:16.765Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 3,
+  "fields": {
+    "title": "Python პროგრამირების საფუძვლები",
+    "description": "ისწავლეთ პროგრამირება ნულიდან Python ენაზე — სინტაქსი, ციკლები, ფუნქციები და პრაქტიკული პროექტები.",
+    "syllabus": "1. ცვლადები და მონაცემთა ტიპები\r\n2. პირობითი გამონათქვამები და ციკლები\r\n3. ფუნქციები და მოდულები\r\n4. ობიექტზე ორიენტირებული პროგრამირება\r\n5. საბოლოო პროექტი",
+    "price": "350.00",
+    "image": "",
+    "category": 3,
+    "instructor": 2,
+    "start_date": "2026-09-09T10:56:00Z",
+    "duration_weeks": 3,
+    "created_at": "2026-08-29T17:10:57.004Z",
+    "updated_at": "2026-09-01T08:48:36.804Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 4,
+  "fields": {
+    "title": "React & მოდერნული Frontend",
+    "description": "აწყვეთ თანამედროვე ვებ-აპლიკაციები React-ის, Hooks-ისა და საუკეთესო პრაქტიკების გამოყენებით.",
+    "syllabus": "1. JSX და კომპონენტები\r\n2. State და Props\r\n3. Hooks (useState, useEffect)\r\n4. Routing\r\n5. API-სთან ინტეგრაცია",
+    "price": "420.00",
+    "image": "",
+    "category": 3,
+    "instructor": 2,
+    "start_date": "2026-09-04T10:56:00Z",
+    "duration_weeks": 12,
+    "created_at": "2026-08-29T17:10:57.005Z",
+    "updated_at": "2026-09-01T08:47:55.866Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 5,
+  "fields": {
+    "title": "ეთიკური ჰაკინგის შესავალი",
+    "description": "ქსელური უსაფრთხოების საფუძვლები, პენეტრაციული ტესტირება და დაცვის მექანიზმები.",
+    "syllabus": "1. ქსელური სკანირება\r\n2. მოწყვლადობების ანალიზი\r\n3. პენეტრაციული ტესტირების მეთოდები\r\n4. ანგარიშგება და დაცვის რეკომენდაციები",
+    "price": "500.00",
+    "image": "",
+    "category": 2,
+    "instructor": 2,
+    "start_date": "2026-09-19T10:56:00Z",
+    "duration_weeks": 5,
+    "created_at": "2026-08-29T17:10:57.007Z",
+    "updated_at": "2026-09-01T08:48:15.812Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 6,
+  "fields": {
+    "title": "მონაცემთა ანალიზი SQL-ით",
+    "description": "ისწავლეთ მონაცემთა ბაზების მოთხოვნა, აგრეგაცია და ანალიზი რეალურ მონაცემებზე.",
+    "syllabus": "ისწავლეთ მონაცემთა ბაზების მოთხოვნა, აგრეგაცია და ანალიზი რეალურ მონაცემებზე.",
+    "price": "300.00",
+    "image": "",
+    "category": 4,
+    "instructor": 2,
+    "start_date": "2026-12-12T10:00:00Z",
+    "duration_weeks": 10,
+    "created_at": "2026-08-29T17:10:57.008Z",
+    "updated_at": "2026-09-01T08:48:10.335Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 8,
+  "fields": {
+    "title": "JavaScript ES6+ სრული კურსი",
+    "description": "თანამედროვე JavaScript: promises, async/await, modules და praqtikuli proeqtebi.",
+    "syllabus": "თანამედროვე JavaScript: promises, async/await, modules და praqtikuli proeqtebi.",
+    "price": "280.00",
+    "image": "",
+    "category": 3,
+    "instructor": 2,
+    "start_date": "2026-02-09T15:00:00Z",
+    "duration_weeks": 6,
+    "created_at": "2026-08-30T10:39:26.122Z",
+    "updated_at": "2026-09-01T08:46:45.969Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 9,
+  "fields": {
+    "title": "Django REST Framework საფუძვლები",
+    "description": "API-ების აწყობა Django-ზე: სერიალიზატორები, ViewSet-ები, ავტორიზაცია.",
+    "syllabus": "API-ების აწყობა Django-ზე: სერიალიზატორები, ViewSet-ები, ავტორიზაცია.",
+    "price": "400.00",
+    "image": "",
+    "category": 3,
+    "instructor": 2,
+    "start_date": "2026-09-02T10:00:00Z",
+    "duration_weeks": 10,
+    "created_at": "2026-08-30T10:39:26.125Z",
+    "updated_at": "2026-09-01T11:31:57.569Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 10,
+  "fields": {
+    "title": "ქსელური უსაფრთხოების პრაქტიკუმი",
+    "description": "Firewall-ები, VPN, ინტრუზიის აღმოჩენის სისტემები რეალურ სცენარებზე.",
+    "syllabus": "Firewall-ები, VPN, ინტრუზიის აღმოჩენის სისტემები რეალურ სცენარებზე.",
+    "price": "450.00",
+    "image": "",
+    "category": 2,
+    "instructor": 2,
+    "start_date": "2026-10-01T15:00:00Z",
+    "duration_weeks": 8,
+    "created_at": "2026-08-30T10:39:26.127Z",
+    "updated_at": "2026-09-01T08:45:55.140Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 11,
+  "fields": {
+    "title": "მანქანური სწავლების შესავალი",
+    "description": "ძირითადი ML ალგორითმები, scikit-learn და პრაქტიკული მოდელირება.",
+    "syllabus": "ძირითადი ML ალგორითმები, scikit-learn და პრაქტიკული მოდელირება.",
+    "price": "550.00",
+    "image": "",
+    "category": 4,
+    "instructor": 2,
+    "start_date": "2026-10-01T13:00:00Z",
+    "duration_weeks": 4,
+    "created_at": "2026-08-30T10:39:26.128Z",
+    "updated_at": "2026-09-01T08:44:31.419Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 19,
+  "fields": {
+    "title": "სპეციალიზაცია მონაცემთა ანალიზი და ხელოვნური ინტელექტი Python-ით",
+    "description": "სპეციალიზაციის ფარგლებში მსმენელები დაეუფლებიან მონაცემთა ანალიტიკოსის, ასევე Python დეველოპერის პროფესიას",
+    "syllabus": "– საშუალო და რთული ამოცანების Python ზე გადაწყვეტილების შემუშავებას, პროგრამის დაწერას\r\n– Python-ზე ალგორითმების წერას\r\n– Linux სერვერებზე, სისტემებზე სკრიპტინგის და ავტომატიზაციას\r\n– მუშაობას Python დეველოპერის პოზიციაზე\r\n– მონაცემთა მოძიებას, დამუშავებას, ანალიზს, ვიზუალიზაციას\r\n– მუშაობის დაწყებას AI სისტემებთან\r\n– მუშაობას მონაცემთა ბაზებთან Python – ის გამოყენებით\r\n– დამოუკიდებლად ჭკვიანი სისტემებისა და პროგრამების აწყობას\r\n– რაციონალურობის და ინტუიციის პროგრამულ სიმულაციას\r\n– მანქანური სწავლების მოდელების შექმნას და დატრენინგებას",
+    "price": "1250.00",
+    "image": "course_images/back.JPG",
+    "category": 3,
+    "instructor": 32,
+    "start_date": "2026-10-18T17:30:00Z",
+    "duration_weeks": 24,
+    "created_at": "2026-09-03T09:26:25.356Z",
+    "updated_at": "2026-09-03T09:27:00.677Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 20,
+  "fields": {
+    "title": "პეციალიზაცია შეღწევადობის ტესტერი",
+    "description": "სპეციალიზაციის გავლის შემდეგ, სტუდენტებს ექნებათ შესაძლებლობა და ყველა საჭირო უნარი გააგრძელონ პროფესიული მოღვაწეობა ე.წ. Junior Pentester-ის პოზიციაზე; კიბერ უსაფრთხოების ოფიცრის პოზიციაზე; ქსელური უსაფრთხოების მიმართულებით; Linux Server-ების ადმინისტრატორად უსაფრთხოების მიმართულებით; კურსდამთავრებულებს შეეძლებათ Python ზე სკრიპტების წერა.",
+    "syllabus": "შეღწევადობის ტესტირების სპეციალიზაცია წარმოადგენს დღეისათვის შეღწევადობის ტესტირებისთვის აუცილებელი კურსების სრულყოფილ სასწავლო პროგრამას. კურსის თითოეული საგნის უმეტესი ნაწილი დათმობილია პრაქტიკულ დავალებებზე, რაც სტუდენტს შესაძლებლობას აძლევს თეორიული ცოდნის მიღებასთან ერთად, პრაქტიკულად შეასრულოს ლექტორის მიერ ახსნილი მასალა. სპეციალიზაციის პირველ ეტაპზე სტუდენტები გაივლიან შეღწევადობის ტესტირებისთვის აუცილებელ საგნებს, მეორე ეტაპი კი დათმობილი იქნება კონკრეტულ შეტევებზე, მოწყვლადობებსა და საფრთხეებზე. კურსის ბოლოს სტუდენტები ტრენერის ხელმძღვანელობით იმუშავებენ ინდივიდუალურ ფინალურ პროექტზე. მსმენელები პრაქტიკულ დავალებებს შეასრულებენ BITSENTINEL-ის მიერ შექმნილ საგანმანათლებლო პლატფორმა – CyberEdu-ზე. რომელზეც ტარდება ევროპაში კიბერ უსაფრთხოების ყველაზე მასშტაბური ჰაკათონი DefCamp-ი.",
+    "price": "1200.00",
+    "image": "",
+    "category": 3,
+    "instructor": 32,
+    "start_date": "2026-09-03T16:30:00Z",
+    "duration_weeks": 24,
+    "created_at": "2026-09-03T09:29:16.711Z",
+    "updated_at": "2026-09-03T09:29:16.711Z"
+  }
+},
+{
+  "model": "courses.enrollment",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "course": 1,
+    "enrolled_at": "2026-08-29T08:36:11.208Z"
+  }
+},
+{
+  "model": "courses.enrollment",
+  "pk": 9,
+  "fields": {
+    "user": 29,
+    "course": 11,
+    "enrolled_at": "2026-08-31T10:30:43.936Z"
+  }
+},
+{
+  "model": "courses.enrollment",
+  "pk": 10,
+  "fields": {
+    "user": 29,
+    "course": 10,
+    "enrolled_at": "2026-08-31T10:31:24.269Z"
+  }
+},
+{
+  "model": "courses.enrollment",
+  "pk": 11,
+  "fields": {
+    "user": 30,
+    "course": 11,
+    "enrolled_at": "2026-08-31T10:34:05.933Z"
+  }
+},
+{
+  "model": "courses.enrollment",
+  "pk": 12,
+  "fields": {
+    "user": 30,
+    "course": 10,
+    "enrolled_at": "2026-08-31T10:34:07.515Z"
+  }
+},
+{
+  "model": "courses.enrollment",
+  "pk": 13,
+  "fields": {
+    "user": 29,
+    "course": 3,
+    "enrolled_at": "2026-09-01T08:50:17.602Z"
+  }
+},
+{
+  "model": "courses.enrollment",
+  "pk": 17,
+  "fields": {
+    "user": 30,
+    "course": 19,
+    "enrolled_at": "2026-09-03T09:39:38.744Z"
+  }
+},
+{
+  "model": "courses.studenthistoryentry",
+  "pk": 2,
+  "fields": {
+    "user": 30,
+    "title": "Django REST Framework საფუძვლები",
+    "description": "სერთიფიკატი",
+    "completed_date": "2026-09-25",
+    "created_at": "2026-09-03T05:53:59.340Z"
+  }
+},
+{
+  "model": "courses.studenthistoryentry",
+  "pk": 3,
+  "fields": {
+    "user": 29,
+    "title": "javascript საფუძვლები",
+    "description": "სერთიფიკატი",
+    "completed_date": "2025-12-12",
+    "created_at": "2026-09-03T10:05:55.374Z"
+  }
+},
+{
+  "model": "courses.teacheraccesscode",
+  "pk": 1,
+  "fields": {
+    "code": "123456",
+    "is_active": true,
+    "note": "წვდომის კოდი",
+    "created_at": "2026-09-03T07:10:30.282Z"
+  }
+}
+]

@@ -1,0 +1,32 @@
+# ---------- Python / Django (backend) ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+backend/backend/staticfiles/
+# media/ ᲣᲙᲕᲔ ᲐᲠ ᲘᲛᲐᲚᲔᲑᲐ! სურათები (კურსების ფოტოები, მასწავლებლების ავატარები)
+# უნდა აიტვირთოს GitHub-ზე, რადგან Render-ის უფასო გეგმას მუდმივი დისკი არ აქვს
+# და Docker image აშენდება მხოლოდ იმით, რაც git repo-შია.
+# backend/backend/media/
+backend/backend/.env
+#ჩემი შენიშვნა db.sqlite3 სთვის რომ მახსოვდეს
+
+# db.sqlite3 შეგნებულად არის დამალული — ავტვირთავ GitHub-ზე, რომ
+
+# Render-ის Docker build-მა ის "ჩასვას" image-ში (იხ. render.yaml-ის
+# კომენტარები DATABASE_URL-ის შესახებ, რომ SQLite რეალურად გამოვიყენო).
+# backend/backend/db.sqlite3
+
+# ---------- Node / React (frontend) ----------
+frontend/frontend/node_modules/
+frontend/frontend/build/
+frontend/frontend/.env
+frontend/frontend/npm-debug.log*
+
+# ---------- OS / Editor ----------
+.DS_Store
+.vscode/
+.idea/
+*.log
