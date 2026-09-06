@@ -5,7 +5,7 @@ echo "Applying database migrations..."
 python manage.py migrate --noinput
 
 echo "Collecting static files for WhiteNoise..."
-python manage.py collectstatic --noinput
+python manage.py collectstatic --noinput --clear
 
 echo "Loading initial data (only if the database is still empty)..."
 python manage.py load_initial_data || true
