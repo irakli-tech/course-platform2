@@ -172,11 +172,32 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # ინახება Cloudinary-ზე, არა Render-ის დროებით დისკზე - ამიტომ restart-ზე აღარ იკარგება.
 # საჭირო env ცვლადები Render-ზე: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
 # (უფასო ანგარიში: https://cloudinary.com/users/register/free)
+_cloudinary_cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME')
+_cloudinary_api_key = os.environ.get('CLOUDINARY_API_KEY')
+_cloudinary_api_secret = os.environ.get('CLOUDINARY_API_SECRET')
+
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': _cloudinary_cloud_name,
+    'API_KEY': _cloudinary_api_key,
+    'API_SECRET': _cloudinary_api_secret,
 }
+
+# მნიშვნელოვანი: django-cloudinary-storage ამ სამივე მნიშვნელობას კითხულობს
+# import-ის დროს (itemgetter-ით), და თუ რომელიმეა None (და არა უბრალოდ
+# გამოტოვებული key), ის ჩუმად აგზავნის cloudinary.config()-ს None მნიშვნელობებით -
+# არავითარ შეცდომას აქ არ აგდებს! შედეგად ეს ჩანს მხოლოდ მოგვიანებით, request-ის
+# დამუშავებისას, როცა ავატარის ატვირთვა/URL-ის აგება 500-ს აბრუნებს Cloudinary-ს
+# ავთენტიფიკაციის შეცდომის გამო. ამიტომ ჩვენ თვითონ ვამოწმებთ სამივეს ერთდროულად:
+_cloudinary_fully_configured = bool(
+    _cloudinary_cloud_name and _cloudinary_api_key and _cloudinary_api_secret
+)
+if any([_cloudinary_cloud_name, _cloudinary_api_key, _cloudinary_api_secret]) and not _cloudinary_fully_configured:
+    import warnings
+    warnings.warn(
+        'CLOUDINARY_CLOUD_NAME/API_KEY/API_SECRET სამივე არ არის მითითებული (ნაწილობრივ '
+        'კონფიგურირებულია) - media ატვირთვები 500 შეცდომას დააბრუნებს. შეამოწმეთ Render '
+        'Dashboard > Environment.'
+    )
 
 # --- STORAGES (Django 4.2+ ახალი სტილი) ---
 # ეს ცვლადი ყოველთვის უნდა იყოს განსაზღვრული (if-ის შიგნით კი არა), თორემ
@@ -186,10 +207,12 @@ CLOUDINARY_STORAGE = {
 # მნიშვნელოვანი: STORAGES და ძველებური STATICFILES_STORAGE / DEFAULT_FILE_STORAGE
 # ერთდროულად არ შეიძლება იყოს დაყენებული - Django ImproperlyConfigured შეცდომას
 # დააგდებს და deploy ჩავარდება. ამიტომ STATICFILES_STORAGE არსად აღარ გვხვდება.
-if os.environ.get('CLOUDINARY_CLOUD_NAME'):
+if _cloudinary_fully_configured:
     _default_file_storage_backend = "cloudinary_storage.storage.MediaCloudinaryStorage"
 else:
-    # ლოკალურად (env ცვლადების გარეშე) - ჩვეულებრივ დისკზე
+    # ლოკალურად ან თუ Cloudinary ცვლადები (ერთიც კი) აკლია - ჩვეულებრივ დისკზე.
+    # (Render Free-ის დისკი ephemeral-ია და restart-ზე იშლება media, მაგრამ
+    # ეს მაინც სჯობს 500 შეცდომას ყოველ ატვირთვაზე.)
     _default_file_storage_backend = "django.core.files.storage.FileSystemStorage"
 
 STORAGES = {
@@ -208,6 +231,7 @@ STORAGES = {
 # თუ რომელიმე static ფაილი კოდში/თემფლეითში მოხსენიებულია, მაგრამ ფაქტობრივად
 # არ არსებობს, CompressedManifestStaticFilesStorage სტანდარტულად collectstatic-ს
 # ჩავარდნაზე მიჰყავს. False-ზე დაყენებით მხოლოდ warning-ს გამოსცემს და აგრძელებს
+
 WHITENOISE_MANIFEST_STRICT = False
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
