@@ -24,9 +24,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
 
-    # cloudinary_storage სავალდებულოდ 'django.contrib.staticfiles'-ის წინ უნდა იყოს.
-    'cloudinary_storage',
+    # შენიშვნა: 'cloudinary_storage'-ს თავისი, override-ილი 'collectstatic'
+    # command აქვს, რომელიც ძველებურ settings.STATICFILES_STORAGE ცვლადს
+    # ეყრდნობა და ჩვენს ახალი-სტილის STORAGES dict-თან შეუთავსებელია
+    # (AttributeError-ს იძლევა). Django INSTALLED_APPS-ში command-ის
+    # კონფლიქტისას ყოველთვის პირველ აპლიკაციას ანიჭებს უპირატესობას,
+    # ამიტომ 'django.contrib.staticfiles' განზრახ არის 'cloudinary_storage'-ზე
+    # ადრე - რომ Django-ს საკუთარი, გაუფუჭებელი collectstatic გამოიყენებოდეს.
+    # (ეს წესი მხოლოდ მაშინ საჭირო იქნებოდა, თუ თავად static ფაილებსაც
+    # Cloudinary-ზე ვინახავდით - ჩვენთან static-ს WhiteNoise ემსახურება.)
     'django.contrib.staticfiles',
+    'cloudinary_storage',
     'cloudinary',
     
     # 3rd Party Apps
@@ -197,7 +205,9 @@ STORAGES = {
     },
 }
 
-
+# თუ რომელიმე static ფაილი კოდში/თემფლეითში მოხსენიებულია, მაგრამ ფაქტობრივად
+# არ არსებობს, CompressedManifestStaticFilesStorage სტანდარტულად collectstatic-ს
+# ჩავარდნაზე მიჰყავს. False-ზე დაყენებით მხოლოდ warning-ს გამოსცემს და აგრძელებს
 WHITENOISE_MANIFEST_STRICT = False
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
