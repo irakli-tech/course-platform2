@@ -33,10 +33,10 @@ services:
     name: orioni-frontend
     runtime: static
     buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+    staticPublishPath: ./build
     rootDir: frontend/frontend
     envVars:
-      - key: VITE_API_URL
+      - key: REACT_APP_API_URL
         value: https://orioni-backend.onrender.com
     routes:
       - type: rewrite
