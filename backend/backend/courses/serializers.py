@@ -10,7 +10,6 @@ class RegisterSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(max_length=50, required=False, allow_blank=True, default='')
     phone = serializers.CharField(max_length=20, required=True, allow_blank=False)
     bio = serializers.CharField(required=False, allow_blank=True, default='')
-    # მასწავლებლად რეგისტრაციისთვის საჭირო საიდუმლო კოდი (მხოლოდ ვალიდაციისთვის - არსად არ ინახება).
     teacher_code = serializers.CharField(required=False, allow_blank=True, default='', write_only=True)
 
     class Meta:
@@ -47,12 +46,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         last_name = validated_data.pop('last_name', '')
         phone = validated_data.pop('phone', '')
         bio = validated_data.pop('bio', '')
-        validated_data.pop('teacher_code', None)  # მხოლოდ ვალიდაციისთვის გამოვიყენეთ, არ ინახება
+        validated_data.pop('teacher_code', None)
 
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email', ''),
-            password=validated_data['password']
+            password=validated_data['password'],
+            first_name=first_name,
+            last_name=last_name
         )
 
         profile, _ = Profile.objects.get_or_create(user=user)
@@ -76,8 +77,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             'id': instance.id,
             'username': instance.username,
             'email': instance.email,
-            'first_name': profile.first_name if profile else '',
-            'last_name': profile.last_name if profile else '',
+            'first_name': profile.first_name if profile else instance.first_name,
+            'last_name': profile.last_name if profile else instance.last_name,
             'role': profile.role if profile else Profile.ROLE_STUDENT,
             'phone': profile.phone if profile else '',
             'avatar': avatar_url,
@@ -99,11 +100,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_first_name(self, obj):
         profile = getattr(obj, 'profile', None)
-        return profile.first_name if profile else ''
+        return (profile.first_name if profile and profile.first_name else obj.first_name) or ''
 
     def get_last_name(self, obj):
         profile = getattr(obj, 'profile', None)
-        return profile.last_name if profile else ''
+        return (profile.last_name if profile and profile.last_name else obj.last_name) or ''
 
     def get_role(self, obj):
         profile = getattr(obj, 'profile', None)
@@ -167,11 +168,14 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         profile_data = validated_data.pop('profile', {})
         instance = super().update(instance, validated_data)
         profile = getattr(instance, 'profile', None)
+
         if profile is not None and profile_data:
             if 'first_name' in profile_data:
                 profile.first_name = profile_data['first_name']
+                instance.first_name = profile_data['first_name']
             if 'last_name' in profile_data:
                 profile.last_name = profile_data['last_name']
+                instance.last_name = profile_data['last_name']
             if 'phone' in profile_data:
                 profile.phone = profile_data['phone']
             if 'avatar' in profile_data:
@@ -179,6 +183,8 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
             if 'bio' in profile_data:
                 profile.bio = profile_data['bio']
             profile.save()
+            instance.save(update_fields=['first_name', 'last_name'])
+
         return instance
 
 
@@ -196,11 +202,11 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     def get_first_name(self, obj):
         profile = getattr(obj, 'profile', None)
-        return profile.first_name if profile else ''
+        return (profile.first_name if profile and profile.first_name else obj.first_name) or ''
 
     def get_last_name(self, obj):
         profile = getattr(obj, 'profile', None)
-        return profile.last_name if profile else ''
+        return (profile.last_name if profile and profile.last_name else obj.last_name) or ''
 
     def get_avatar(self, obj):
         profile = getattr(obj, 'profile', None)
@@ -230,10 +236,10 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     instructor = UserSerializer(read_only=True)
-    teacher = UserSerializer(source='instructor', read_only=True)  # თავსებადობისთვის
+    teacher = UserSerializer(source='instructor', read_only=True)
     teacher_name = serializers.SerializerMethodField()
     category_name = serializers.CharField(source='category.name', read_only=True)
-    duration = serializers.CharField(source='duration_weeks', read_only=True)  # თავსებადობისთვის
+    duration = serializers.CharField(source='duration_weeks', read_only=True)
     is_enrolled = serializers.SerializerMethodField()
     students_count = serializers.SerializerMethodField()
 
