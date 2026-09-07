@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import API from '../services/api';
 
 const formatDateTime = (iso) => {
@@ -53,7 +54,7 @@ const CourseDetailModal = ({ course, isOwner, onClose }) => {
     return fullName || student.username;
   };
 
-  return (
+  return createPortal(
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose} aria-label="დახურვა">✕</button>
@@ -156,7 +157,8 @@ const CourseDetailModal = ({ course, isOwner, onClose }) => {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
