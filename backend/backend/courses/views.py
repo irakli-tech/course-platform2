@@ -13,7 +13,7 @@ from .serializers import (
     EnrolledStudentSerializer, ProfileUpdateSerializer, TeacherSerializer,
     StudentHistoryEntrySerializer
 )
-from .permissions import IsInstructorOrReadOnly, IsTeacherOrReadOnly, IsStudent
+from .permissions import IsInstructorOrReadOnly, IsTeacherOrReadOnly, IsStudent, IsAdminOrReadOnly
 
 
 class RegisterView(generics.CreateAPIView):
@@ -64,7 +64,7 @@ class TeacherCoursesView(generics.ListAPIView):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all().order_by('name')
     serializer_class = CategorySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
     pagination_class = None
 
 
@@ -147,10 +147,7 @@ class EnrollmentViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class StudentHistoryEntryViewSet(viewsets.ModelViewSet):
-    """
-    მოსწავლის მიერ ხელით დამატებული ისტორიის ჩანაწერები (გავლილი კურსები).
-    თითოეულ მომხმარებელს მხოლოდ საკუთარი ჩანაწერების ნახვა/რედაქტირება შეუძლია.
-    """
+
     serializer_class = StudentHistoryEntrySerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = None
