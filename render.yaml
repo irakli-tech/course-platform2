@@ -1,11 +1,6 @@
-# Render Blueprint — ავტომატურად ქმნის backend-ს (Docker), frontend-ს (Static Site) და PostgreSQL ბაზას.
+# Render Blueprint — ავტომატურად ქმნის backend-ს (Docker) და frontend-ს (Static Site).
+# ბაზა აღარაა Render-ის მართული — გამოიყენება გარე Neon PostgreSQL (იხ. DATABASE_URL ქვემოთ).
 # დოკუმენტაცია: https://render.com/docs/blueprint-spec
-
-databases:
-  - name: orioni-db
-    plan: free
-    databaseName: orioni
-    user: orioni
 
 services:
   # ---------- Django REST backend (Docker) ----------
@@ -29,18 +24,7 @@ services:
       - key: CSRF_TRUSTED_ORIGINS
         value: "https://*.onrender.com"
       - key: DATABASE_URL
-        fromDatabase:
-          name: orioni-db
-          property: connectionString
-      # Cloudinary საიდუმლოებია, git-ში არ ინახება - მნიშვნელობა ხელით
-      # შეავსეთ Render Dashboard-ზე: Environment > Environment Variables
-      # (იხილეთ cloudinary.com/console -> API Keys)
-      - key: CLOUDINARY_CLOUD_NAME
-        sync: false
-      - key: CLOUDINARY_API_KEY
-        sync: false
-      - key: CLOUDINARY_API_SECRET
-        sync: false
+        sync: false #  ხელით ჩაწერ Render Dashboard-ში (Neon connection string)
 
   # ---------- React frontend (Static Site) ----------
   - type: web
