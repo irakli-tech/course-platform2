@@ -1,5 +1,6 @@
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
+from django.db import IntegrityError
 
 from courses.models import Course
 
@@ -20,5 +21,16 @@ class Command(BaseCommand):
             return
 
         self.stdout.write("ბაზა ცარიელია — ვტვირთავ data.json-ს...")
-        call_command("loaddata", "data.json")
-        self.stdout.write(self.style.SUCCESS("data.json წარმატებით ჩაიტვირთა."))
+        try:
+            call_command("loaddata", "data.json")
+            self.stdout.write(self.style.SUCCESS("data.json წარმატებით ჩაიტვირთა."))
+        except IntegrityError as exc:
+            self.stdout.write(self.style.WARNING(
+                "data.json ვერ ჩაიტვირთა, რადგან ბაზაში უკვე არსებობს სხვა "
+                "production მონაცემები (users/profiles), რომლებიც ძველ fixture-ის "
+                "ID-ებთან კონფლიქტშია. კურსების ცხრილი ნამდვილად ცარიელია — ეს "
+                "სავარაუდოდ ნიშნავს, რომ კატეგორია წაიშალა და კურსებიც კასკადურად "
+                "წაიშალა მასთან ერთად. გადაამოწმეთ /admin/courses/category/ და "
+                "საჭიროებისამებრ ხელით დაამატეთ კურსები თავიდან. "
+                f"დეტალი: {exc}"
+            ))
