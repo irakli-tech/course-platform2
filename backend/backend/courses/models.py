@@ -5,10 +5,6 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
-    """
-    ერთი მომხმარებელი = ერთი როლი: მასწავლებელი ან მოსწავლე.
-    მასწავლებელს შეუძლია კურსების შექმნა/მართვა, მოსწავლეს - ჩარიცხვა კურსებზე.
-    """
     ROLE_TEACHER = 'teacher'
     ROLE_STUDENT = 'student'
     ROLE_CHOICES = [
@@ -69,7 +65,7 @@ class Course(models.Model):
     )
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     image = models.ImageField(upload_to='course_images/', blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='courses')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='courses')
     instructor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_courses')
     start_date = models.DateTimeField(
         null=True, blank=True,
@@ -102,11 +98,6 @@ class Enrollment(models.Model):
 
 
 class StudentHistoryEntry(models.Model):
-    """
-    მოსწავლის მიერ საკუთარი ხელით დამატებული ჩანაწერი გავლილი კურსის შესახებ
-    (მაგ. სხვა პლატფორმაზე ან ადრე გავლილი კურსი). განსხვავდება Enrollment-ისგან,
-    რომელიც ავტომატურად იქმნება ამ პლატფორმაზე ჩარიცხვისას.
-    """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='history_entries')
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, default='')
@@ -121,11 +112,7 @@ class StudentHistoryEntry(models.Model):
 
 
 class TeacherAccessCode(models.Model):
-    """
-    მასწავლებლად რეგისტრაციისთვის საჭირო საიდუმლო კოდი. სუპერიუზერი ქმნის კოდს
-    Django admin-ში და ზეპირად აწვდის მასწავლებელს; რეგისტრაციისას მასწავლებელი
-    შეჰყავს ეს კოდი, რომ დადასტურდეს მისი უფლებამოსილება.
-    """
+
     code = models.CharField(max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
     note = models.CharField(
