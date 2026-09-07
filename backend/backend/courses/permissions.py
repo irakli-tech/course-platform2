@@ -12,10 +12,6 @@ class IsInstructorOrReadOnly(permissions.BasePermission):
 
 
 class IsTeacherOrReadOnly(permissions.BasePermission):
-    """
-    კურსის შექმნა (POST) დაშვებულია მხოლოდ 'მასწავლებელი' როლის მქონე
-    ავტორიზებული მომხმარებლისთვის. კითხვა (GET) ღიაა ყველასთვის.
-    """
     message = 'კურსის დამატება შეუძლია მხოლოდ მასწავლებელს.'
 
     def has_permission(self, request, view):
@@ -26,6 +22,14 @@ class IsTeacherOrReadOnly(permissions.BasePermission):
             return False
         profile = getattr(user, 'profile', None)
         return bool(profile and profile.is_teacher)
+
+
+class IsAdminOrReadOnly(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return bool(request.user and request.user.is_authenticated and request.user.is_staff)
 
 
 class IsStudent(permissions.BasePermission):
