@@ -1,90 +1,47 @@
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
+import React from 'react';
+import { createPortal } from 'react-dom';
+import './CourseModal.css'; // სტილებისთვის
 
-.modal-content {
-  background: #ffffff;
-  color: #1e293b;
-  padding: 24px;
-  border-radius: 12px;
-  max-width: 800px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
+const CourseModal = ({ isOpen, onClose, teacherName, courses, loading }) => {
+  if (!isOpen) return null;
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-}
+  return createPortal(
+    <div className="cm-modal-overlay" onClick={onClose}>
+      <div className="cm-modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="cm-modal-header">
+          <h2>{teacherName}-ს კურსები</h2>
+          <button className="cm-close-btn" onClick={onClose} aria-label="დახურვა">&times;</button>
+        </div>
+        
+        <div className="cm-modal-body">
+          {loading ? (
+            <p>იტვირთება...</p>
+          ) : courses.length === 0 ? (
+            <p>ამ მასწავლებელს ჯერ არ აქვს აქტიური კურსები.</p>
+          ) : (
+            <div className="cm-courses-grid">
+              {courses.map((course) => (
+                <div key={course.id} className="cm-course-card">
+                  {course.image && (
+                    <img src={course.image} alt={course.title} className="cm-course-img" />
+                  )}
+                  <h3>{course.title}</h3>
+                  <p>{course.description}</p>
+                  {course.price !== undefined && (
+                    <span className="cm-course-price-tag">
+                      {Number(course.price) > 0 ? `${course.price} ₾` : 'უფასო'}
+                    </span>
+                  )}
+                  {course.duration_weeks && <span>ხანგრძლივობა: {course.duration_weeks} კვირა</span>}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+};
 
-.modal-header h2 {
-  color: #1e293b;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: #666;
-}
-
-.modal-body {
-  color: #334155;
-}
-
-.courses-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.course-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 12px;
-  background: #f9f9f9;
-  color: #1e293b;
-  display: flex;
-  flex-direction: column;
-}
-
-.course-card h3 {
-  color: #1e293b;
-}
-
-.course-img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 8px;
-}
-
-.course-price-tag {
-  display: inline-block;
-  align-self: flex-start;
-  margin-top: 6px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: rgba(37, 99, 235, 0.1);
-  color: #2563eb;
-  font-weight: 700;
-  font-size: 0.8rem;
-}
+export default CourseModal;
