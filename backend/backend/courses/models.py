@@ -5,6 +5,7 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
+   
     ROLE_TEACHER = 'teacher'
     ROLE_STUDENT = 'student'
     ROLE_CHOICES = [
@@ -43,6 +44,16 @@ def create_user_profile(sender, instance, created, **kwargs):
     """ყოველი ახალი User-ისთვის ავტომატურად იქმნება Profile (default: student)."""
     if created:
         Profile.objects.get_or_create(user=instance)
+
+
+@receiver(post_save, sender=Profile)
+def sync_user_names(sender, instance, **kwargs):
+    """Profile-ში სახელის/გვარის შეცვლისას ავტომატურად სინქრონიზდება User მოდელის first_name და last_name-თან."""
+    user = instance.user
+    if user.first_name != instance.first_name or user.last_name != instance.last_name:
+        user.first_name = instance.first_name
+        user.last_name = instance.last_name
+        user.save(update_fields=['first_name', 'last_name'])
 
 
 class Category(models.Model):
@@ -98,6 +109,7 @@ class Enrollment(models.Model):
 
 
 class StudentHistoryEntry(models.Model):
+   
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='history_entries')
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, default='')
@@ -112,7 +124,7 @@ class StudentHistoryEntry(models.Model):
 
 
 class TeacherAccessCode(models.Model):
-
+  
     code = models.CharField(max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
     note = models.CharField(
