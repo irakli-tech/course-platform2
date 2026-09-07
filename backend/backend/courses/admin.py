@@ -3,9 +3,9 @@ from .models import Category, Course, Enrollment, Profile, StudentHistoryEntry, 
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'role', 'phone')
+    list_display = ('id', 'user', 'first_name', 'last_name', 'role', 'phone')
     list_filter = ('role',)
-    search_fields = ('user__username', 'phone')
+    search_fields = ('user__username', 'first_name', 'last_name', 'phone')
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -33,10 +33,6 @@ class StudentHistoryEntryAdmin(admin.ModelAdmin):
 
 @admin.register(TeacherAccessCode)
 class TeacherAccessCodeAdmin(admin.ModelAdmin):
-    """
-    აქ სუპერიუზერი ქმნის საიდუმლო კოდებს (მაგ: 'ORION-2026') და ზეპირად უზიარებს
-    კონკრეტულ მასწავლებელს, რომელიც შემდეგ რეგისტრაციისას ამ კოდს შეიყვანს.
-    """
     list_display = ('code', 'is_active', 'note', 'created_at')
     list_filter = ('is_active',)
     search_fields = ('code', 'note')
