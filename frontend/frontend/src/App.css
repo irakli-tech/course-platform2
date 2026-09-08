@@ -355,7 +355,7 @@ body {
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.3;
-  min-height: calc(1.3em * 2); /* 2 ხაზის ადგილი ყოველთვის დაცული - ბეჯი აქედან ერთსა და იმავე სიმაღლეზე იწყება, სათაური კი არასდროს იჭრება */
+  min-height: calc(1.3em * 4); 
 }
 
 .card-body {
