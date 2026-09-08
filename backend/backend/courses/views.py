@@ -50,7 +50,7 @@ class TeacherListView(generics.ListAPIView):
 
 
 class TeacherCoursesView(generics.ListAPIView):
-    """კონკრეტული მასწავლებლის მიერ შექმნილი კურსების სია (მასწავლებლების ბანერისთვის)."""
+   
     serializer_class = CourseSerializer
     permission_classes = [permissions.AllowAny]
     pagination_class = None
@@ -59,6 +59,19 @@ class TeacherCoursesView(generics.ListAPIView):
         return Course.objects.select_related(
             'category', 'instructor', 'instructor__profile'
         ).filter(instructor_id=self.kwargs['pk']).order_by('-created_at')
+
+
+class PlatformStatsView(APIView):
+   
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        return Response({
+            'courses_count': Course.objects.count(),
+            'categories_count': Category.objects.count(),
+            'teachers_count': User.objects.filter(profile__role=Profile.ROLE_TEACHER).count(),
+            'students_count': User.objects.filter(profile__role=Profile.ROLE_STUDENT).count(),
+        })
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -147,7 +160,7 @@ class EnrollmentViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class StudentHistoryEntryViewSet(viewsets.ModelViewSet):
-
+   
     serializer_class = StudentHistoryEntrySerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = None
