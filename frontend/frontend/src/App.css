@@ -325,7 +325,8 @@ body {
 
 .card-header {
   display: flex;
-  align-items: center;
+/* align-items: center; */
+  align-items: flex-start;  
   gap: 16px;
   margin-bottom: 16px;
 }
