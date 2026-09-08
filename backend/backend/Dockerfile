@@ -15,9 +15,8 @@ RUN apt-get update || (sleep 3 && apt-get update) && \
 
 # 2. Pip-ის განახლება და დამოკიდებულებების დაყენება
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
+RUN pip install --no-cache-dir --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --upgrade pip && \
+    pip install --no-cache-dir --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -r requirements.txt
 # 3. პროექტის ფაილების კოპირება
 COPY . .
 
