@@ -53,6 +53,14 @@ const HomePage = () => {
   const [isTeacherModalOpen, setIsTeacherModalOpen] = useState(false);
   const [teacherCoursesLoading, setTeacherCoursesLoading] = useState(false);
 
+  const [platformStats, setPlatformStats] = useState({ teachers_count: 0, students_count: 0 });
+
+  useEffect(() => {
+    API.get('stats/')
+      .then((res) => setPlatformStats(res.data))
+      .catch(() => {}); // ბანერისთვის არასავალდებულო მონაცემია, შეცდომაზე გვერდს ვუვლით
+  }, []);
+
   useEffect(() => {
     API.get('categories/')
       .then((res) => setCategories(Array.isArray(res.data) ? res.data : res.data.results || []))
@@ -356,6 +364,14 @@ const HomePage = () => {
               <div className="hero-stat">
                 <strong>{categories.length}</strong>
                 <span>კატეგორია</span>
+              </div>
+              <div className="hero-stat">
+                <strong>{platformStats.teachers_count}</strong>
+                <span>მასწავლებელი</span>
+              </div>
+              <div className="hero-stat">
+                <strong>{platformStats.students_count}</strong>
+                <span>მოსწავლე</span>
               </div>
               <div className="hero-stat">
                 <strong>100%</strong>
