@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.files.uploadedfile import UploadedFile
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from .image_utils import square_thumbnail
 
 
 class Profile(models.Model):
@@ -38,22 +41,19 @@ class Profile(models.Model):
     def is_teacher(self):
         return self.role == self.ROLE_TEACHER
 
+    def save(self, *args, **kwargs):
+        # ახალი ატვირთვის შემთხვევაში (და არა უკვე შენახული ფაილის ხელახლა
+        # შენახვისას) — კვადრატულად ვჭრით ცენტრში და ვზღუდავთ 512x512-მდე.
+        if self.avatar and isinstance(self.avatar.file, UploadedFile):
+            self.avatar = square_thumbnail(self.avatar)
+        super().save(*args, **kwargs)
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     """ყოველი ახალი User-ისთვის ავტომატურად იქმნება Profile (default: student)."""
     if created:
         Profile.objects.get_or_create(user=instance)
-
-
-@receiver(post_save, sender=Profile)
-def sync_user_names(sender, instance, **kwargs):
-    """Profile-ში სახელის/გვარის შეცვლისას ავტომატურად სინქრონიზდება User მოდელის first_name და last_name-თან."""
-    user = instance.user
-    if user.first_name != instance.first_name or user.last_name != instance.last_name:
-        user.first_name = instance.first_name
-        user.last_name = instance.last_name
-        user.save(update_fields=['first_name', 'last_name'])
 
 
 class Category(models.Model):
@@ -95,6 +95,11 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        if self.image and isinstance(self.image.file, UploadedFile):
+            self.image = square_thumbnail(self.image)
+        super().save(*args, **kwargs)
+
 
 class Enrollment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrollments')
@@ -124,7 +129,7 @@ class StudentHistoryEntry(models.Model):
 
 
 class TeacherAccessCode(models.Model):
-  
+   
     code = models.CharField(max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
     note = models.CharField(
