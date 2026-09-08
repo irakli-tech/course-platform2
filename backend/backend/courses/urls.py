@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     CourseViewSet, CategoryViewSet, EnrollmentViewSet,
     RegisterView, MeView, TeacherListView, TeacherCoursesView,
-    StudentHistoryEntryViewSet
+    StudentHistoryEntryViewSet, PlatformStatsView
 )
 
 router = DefaultRouter()
@@ -17,5 +17,6 @@ urlpatterns = [
     path('auth/me/', MeView.as_view(), name='me'),
     path('teachers/', TeacherListView.as_view(), name='teachers'),
     path('teachers/<int:pk>/courses/', TeacherCoursesView.as_view(), name='teacher-courses'),
+    path('stats/', PlatformStatsView.as_view(), name='platform-stats'),
     path('', include(router.urls)),
 ]
